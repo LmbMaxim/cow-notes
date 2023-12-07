@@ -1,10 +1,9 @@
 from datetime import datetime
 
 class Note:
-    db = {'id_':0}
+    db = {'id_': -1, 'notes':{}}
 
     def __init__(self, title, id_=None):
-        # Implement ID that is basically counter that updated when note saves in to db.
         self.id = id_
         self.title = title
         self.date_created = datetime.now()
@@ -15,17 +14,17 @@ class Note:
     @classmethod
     def save(self, title):
         id_ = self.db['id_'] + 1
-        self.db[id_] = Note(title)
+        self.db['notes'][id_] = Note(title)
         self.db['id_'] = id_
         return 1
 
     @classmethod
     def get(self, id_):
-        return self.db[id_]
+        return self.db['notes'][id_]
 
     @classmethod
     def get_all(self):
-        return self.db
+        return self.db['notes'] 
 
 
     def __str__(self):

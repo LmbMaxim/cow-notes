@@ -31,6 +31,6 @@ Note.save('New Note')
 Note.save('New Note2')
 Note.save('New Note3')
 Note.save('New Note4')
-print(Note.get(4))
-
+print(Note.get_all())
+# print(Note.get(0))
 
