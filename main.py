@@ -19,8 +19,16 @@ def take_note():
     return n 
 
 
-notes = []
-n = take_note()
-notes.append(n)
-print(notes)
+
+
+# notes = []
+# n = take_note()
+# notes.append(n)
+# print(notes)
+
+
+Note.save('New Note', 0)
+print(Note.get(0))
+
+
 
