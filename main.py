@@ -27,8 +27,10 @@ def take_note():
 # print(notes)
 
 
-Note.save('New Note', 0)
-print(Note.get(0))
-
+Note.save('New Note')
+Note.save('New Note2')
+Note.save('New Note3')
+Note.save('New Note4')
+print(Note.get(4))
 
 
