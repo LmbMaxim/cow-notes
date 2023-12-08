@@ -1,3 +1,6 @@
+# todo
+# create delete method for Note
+
 from datetime import datetime
 
 class Note:
@@ -14,7 +17,7 @@ class Note:
     @classmethod
     def save(self, title):
         id_ = self.db['id_'] + 1
-        self.db['notes'][id_] = Note(title)
+        self.db['notes'][id_] = Note(title, id_ = id_)
         self.db['id_'] = id_
         return 1
 
@@ -24,14 +27,13 @@ class Note:
 
     @classmethod
     def get_all(self):
-        return self.db['notes'] 
+        return self.db['notes']
 
 
-    def __str__(self):
-        return f'{self.date_created}\n{self.title}\n\n{self.content}\n'
-
+    # def __str__(self):
+    #     return f'{self.date_created}\n{self.title}\n\n{self.content}\n'
+    #
     def __repr__(self):
-        return f'{self.date_created}\n{self.title}{self.content}\n\n\n'
-
+        return f'\n{self.id}\t{self.date_created}\t{self.title}\t{self.content}\n'
 
 
