@@ -1,6 +1,6 @@
 import pickle
-
 from datetime import datetime
+
 
 class Note:
     db = {'id_': -1, 'notes':{}}
@@ -10,7 +10,6 @@ class Note:
         self.title = title
         self.date_created = datetime.now()
         self.content = content
-
 
     @classmethod
     def save(self, title, content):
@@ -44,8 +43,6 @@ class Note:
         with open('db', 'wb') as f:
             self.db = pickle.dump(self.db, f)
         return f.close()
-
-
 
 
     # def __str__(self):
