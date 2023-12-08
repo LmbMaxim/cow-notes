@@ -1,5 +1,4 @@
-# todo
-# create delete method for Note
+import pickle
 
 from datetime import datetime
 
@@ -11,7 +10,6 @@ class Note:
         self.title = title
         self.date_created = datetime.now()
         self.content = "<CONTENT>"
-
 
 
     @classmethod
@@ -27,7 +25,25 @@ class Note:
 
     @classmethod
     def get_all(self):
-        return self.db['notes']
+        return self.db
+
+    @classmethod
+    def load_db(self):
+        with open('db', 'rb') as f:
+            try:
+                data = pickle.load(f)
+            except EOFError:
+                return 0
+        self.db = data
+        return f.close()
+
+    @classmethod
+    def write_db(self):
+        db_file = open('db', 'wb')
+        self.db = pickle.dump(self.db, db_file)
+        return db_file.close()
+
+
 
 
     # def __str__(self):

@@ -1,11 +1,13 @@
-# from tkinter import *
-# from tkinter import ttk
-import json
+import pickle
+import argparse
+
 from models import Note
 
+# Note.load_db()
+#
 # def take_note():
 #     parser = argparse.ArgumentParser(prog='CoWNote')
-#     parser.add_argument('title', type = str)
+#     parser.add_argument('-t', '--title', type = str)
 #     # parser.add_argument('-ls', '--list', action='store_true')
 #     args = parser.parse_args()
 #
@@ -17,20 +19,25 @@ from models import Note
 #         n = Note.save(args.title)
 #         return n
 #     return 0
-#
-#
-#
+
+
 # take_note()
 
+# Load db when start
+# db = open('db', 'rb')
+# a =  pickle.load(db)
+# print(a)
+#
+#
+Note.load_db()
+
 Note.save('New Note2')
 Note.save('New Note2')
-Note.save('New Note2')
+Note.save('New Note9')
+
+# # Write db at the end
+
 notes = Note.get_all()
 print(notes)
-for note in notes.values():
-    print(note.__dict__)
 
-
-
-
-
+Note.write_db()
