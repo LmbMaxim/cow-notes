@@ -39,9 +39,11 @@ class Note:
 
     @classmethod
     def write_db(self):
-        db_file = open('db', 'wb')
-        self.db = pickle.dump(self.db, db_file)
-        return db_file.close()
+        # db_file = open('db', 'wb')
+        # self.db = pickle.dump(self.db, db_file)
+        with open('db', 'wb') as f:
+            self.db = pickle.dump(self.db, f)
+        return f.close()
 
 
 
