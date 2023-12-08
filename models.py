@@ -25,7 +25,7 @@ class Note:
 
     @classmethod
     def get_all(self):
-        return self.db
+        return self.db['notes'].values()
 
     @classmethod
     def load_db(self):
