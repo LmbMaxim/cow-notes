@@ -31,9 +31,7 @@ from models import Note
 #
 Note.load_db()
 
-Note.save('New Note2')
-Note.save('New Note2')
-Note.save('New Note9')
+Note.save('Project Idia', 'Make local dashboard with docker')
 
 # # Write db at the end
 

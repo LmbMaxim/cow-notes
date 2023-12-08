@@ -5,17 +5,17 @@ from datetime import datetime
 class Note:
     db = {'id_': -1, 'notes':{}}
 
-    def __init__(self, title, id_=None):
+    def __init__(self, title, id_, content=None):
         self.id = id_
         self.title = title
         self.date_created = datetime.now()
-        self.content = "<CONTENT>"
+        self.content = content
 
 
     @classmethod
-    def save(self, title):
+    def save(self, title, content):
         id_ = self.db['id_'] + 1
-        self.db['notes'][id_] = Note(title, id_ = id_)
+        self.db['notes'][id_] = Note(title, id_ = id_, content=content)
         self.db['id_'] = id_
         return 1
 
