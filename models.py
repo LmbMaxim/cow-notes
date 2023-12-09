@@ -5,19 +5,34 @@ from datetime import datetime
 class Note:
     db = {'id_': -1, 'notes':{}}
 
-    def __init__(self, title, id_, content):
+    def __init__(self, title, content, id_ = None, date_updated=None):
         self.id = id_
         self.title = title
         self.date_created = datetime.now()
+        self.date_updated = date_updated
         self.content = content
 
     @classmethod
-    def save(self, title, content=None):
-        id_ = self.db['id_'] + 1
-        self.db['notes'][id_] = Note(title, id_ = id_, content=content)
+    def save(self, **kwargs):
+        # title id_ content
+
+        if 'id_' in kwargs:
+            id_ = kwargs['id_']
+        else:
+            id_ = self.db['id_'] + 1
+
+        title = kwargs['title']
+        content = kwargs['content']
+        self.db['notes'][id_] = Note(title, content, id_)
         self.db['id_'] = id_
         return 1
 
+    @classmethod
+    def update(self, **kwargs):
+        id_ = kwargs['id_']
+        n = Note()
+        date_updated = datetime.now()
+        return 1
 
     @classmethod
     def get(self, id_):

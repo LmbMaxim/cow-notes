@@ -32,21 +32,14 @@ def take_note():
     #     n = Note.edit(args.note_id_edit)
     # return 0
 
-
 take_note()
 
-# Load db when start
-# db = open('db', 'rb')
-# a =  pickle.load(db)
-# print(a)
-#
-#
+# title, content = 'article', 'lorumipsum'
+# print(Note.update(id_=4, title=title, content=content))
 
-# Note.load_db()
+
 
 # Note.save('Project Idia', 'Make local dashboard with docker')
 # Note.save('Project Idia', 'Make game in webasm')
-
-
-
+Note.save(title='Project Idia2', content='Make game')
 Note.write_db()
