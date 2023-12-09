@@ -16,23 +16,39 @@ class Note:
     def save(self, **kwargs):
         # title id_ content
 
-        if 'id_' in kwargs:
-            id_ = kwargs['id_']
-        else:
-            id_ = self.db['id_'] + 1
+        # if 'id_' in kwargs:
+        #     id_ = kwargs['id_']
+        # else:
+        #     id_ = self.db['id_'] + 1
 
+        id_ = self.db['id_'] + 1
         title = kwargs['title']
         content = kwargs['content']
         self.db['notes'][id_] = Note(title, content, id_)
         self.db['id_'] = id_
+
         return 1
 
     @classmethod
     def update(self, **kwargs):
-        id_ = kwargs['id_']
-        n = Note()
-        date_updated = datetime.now()
-        return 1
+        try:
+            id_ = kwargs['id_']
+        except:
+            print('No id specified!')
+            return 0
+            
+        try:
+            self.db['notes'][id_]
+            # print(self.db['notes'][id_].content)
+        except:
+            print('Note does not exitst!')
+            return 0
+        
+        #Probably can make loop here
+        self.db['notes'][id_].title = kwargs['title']
+        self.db['notes'][id_].content = kwargs['content']
+        self.db['notes'][id_].date_updated = datetime.now()
+        return 0
 
     @classmethod
     def get(self, id_):
@@ -65,6 +81,6 @@ class Note:
     #     return f'{self.date_created}\n{self.title}\n\n{self.content}\n'
     #
     def __repr__(self):
-        return f'\n{self.id}\t{self.date_created}\t{self.title}\t{self.content}\n'
+        return f'\n{self.id}\t{self.date_created}\t{self.title}\t{self.content}\t{self.date_updated}\n'
 
 

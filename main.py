@@ -41,5 +41,12 @@ take_note()
 
 # Note.save('Project Idia', 'Make local dashboard with docker')
 # Note.save('Project Idia', 'Make game in webasm')
-Note.save(title='Project Idia2', content='Make game')
+
+# Note.save(title='Project Idia2', content='Make game')
+# Note.update(title='Project Idia million bucks', content='Make game BBB', id_=0)
+# Note.update(title='Project Idia million bucks', content='Make game BBB', id_=1)
+Note.update(title='Suckless Project', content='Make game ', id_=2)
+# a  = Note.update(title='Project Idia2', content='Make game')
+
+
 Note.write_db()
