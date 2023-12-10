@@ -24,7 +24,7 @@ def take_note():
         return msg
     
     # Bug. 0 id no show up
-    if args.note_id:
+    if args.note_id != None:
          m = Note.get(args.note_id)
          msg.append(str(m))
          # print(args.note_id)
@@ -44,6 +44,7 @@ def take_note():
 # Note.save('Project Idia', 'Make local dashboard with docker')
 # Note.save('Project Idia', 'Make game in webasm')
 
+# Note.save(title='Nvim Config', content='Make nvim opens with splited window')
 # Note.save(title='Idia For Plugin', content='Tmux tabs for waybar')
 # Note.save(title='Best Game', content='''Make game where you need manage resourcesMake game where you need manage resourcesMake game where you need manage resourcesMake game where you need manage resourcesMake game where you need manage resourcesMake game where you need manage resources''')
 # Note.update(title='Project Idia million bucks', content='Make game BBB', id_=0)
@@ -52,22 +53,25 @@ def take_note():
 # a  = Note.update(title='Project Idia2', content='Make game')
 
 msg = take_note()
-# for m in msg:
-#     print(m)
+for m in msg:
+    print(m)
 def main(stdscr):
+    half_win = curses.COLS//2
 
     def win_left(msg):
-        win = curses.newwin(5,0,0, 0)
+        win = curses.newwin(0, half_win, 0, 0)
         win.clear()
         for m in msg:
-            win.addstr(m)
+            fmsg = str(m)
+            # win.addstr(f(m.title)+'\n')
+            win.addstr(f'{fmsg}')
         win.refresh()
         win.getch()
 
-    # win2 = curses.newwin(5, curses.COLS - (curses.COLS//2) ,0,60)
+    win2 = curses.newwin(5, half_win, 0, half_win)
     def win_right(id_):
         id_=id_
-        win2 = curses.newwin(5,0,0, curses.COLS //2)
+        win2 = curses.newwin(5,0,0, half_win)
         win2.clear()
         m = Note.db['notes'][id_]
         win2.addstr(m.content)

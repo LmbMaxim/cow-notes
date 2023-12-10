@@ -81,6 +81,6 @@ class Note:
     #     return f'{self.date_created}\n{self.title}\n\n{self.content}\n'
     #
     def __repr__(self):
-        return f'\n{self.id}| {self.date_created} | {self.title:15} | {self.content:20} | {self.date_updated}\n'
+        return f'\n{self.id}| {self.date_created} | {self.title:15} | {self.date_updated}\n'
 
 
