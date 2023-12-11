@@ -1,6 +1,5 @@
 import argparse
 import curses
-
 from models import Note
 
 
@@ -20,7 +19,7 @@ def take_note():
     msg = []
     if args.list:
         for note in (Note.get_all()):
-            msg.append(str(note))
+            msg.append(note)
         return msg
     
     # Bug. 0 id no show up
@@ -44,52 +43,59 @@ def take_note():
 # Note.save('Project Idia', 'Make local dashboard with docker')
 # Note.save('Project Idia', 'Make game in webasm')
 
-# Note.save(title='Nvim Config', content='Make nvim opens with splited window')
-# Note.save(title='Idia For Plugin', content='Tmux tabs for waybar')
-# Note.save(title='Best Game', content='''Make game where you need manage resourcesMake game where you need manage resourcesMake game where you need manage resourcesMake game where you need manage resourcesMake game where you need manage resourcesMake game where you need manage resources''')
+# Note.save(title='1Title1', content=' text text text "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"')
+# Note.save(title='2Title2', content=' text text text "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"')
+# Note.save(title='3Title3', content=' text text text "ccccccccccccccccccccccccccccccccccccccccc"')
+# Note.save(title='4Title4', content=' text text text "ddddddddddddddddddddddddddddddddddddddddd"')
+# Note.save(title='5Title5', content=' text text text "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"')
+# Note.save(title='6Title6', content=' text text text "11111111111111111111111111111111111111111"')
+# Note.save(title='7Title7', content=' text text text "22222222222222222222222222222222222222222"')
+# Note.save(title='8Title8', content=' text text text "33333333333333333333333333333333333333333"')
+# Note.save(title='9Title9', content=' text text text "44444444444444444444444444444444444444444"')
 # Note.update(title='Project Idia million bucks', content='Make game BBB', id_=0)
 # Note.update(title='Project Idia million bucks', content='Make game BBB', id_=1)
 # Note.update(title='Suckless Project', content='Make game ', id_=2)
-# a  = Note.update(title='Project Idia2', content='Make game')
 
-msg = take_note()
-for m in msg:
-    print(m)
 def main(stdscr):
     half_win = curses.COLS//2
+    hg = curses.A_REVERSE
 
-    def win_left(msg):
-        win = curses.newwin(0, half_win, 0, 0)
+    win = curses.newwin(0, half_win -2, 0, 0)
+    win2 = curses.newwin(0, half_win, 0, half_win)
+
+    def render_win_r(win, i = 0):
+        msg = Note.get(i).content
         win.clear()
-        for m in msg:
-            fmsg = str(m)
-            # win.addstr(f(m.title)+'\n')
-            win.addstr(f'{fmsg}')
+        win.addstr(str(msg))
         win.refresh()
-        win.getch()
+        # win.getch()
 
-    win2 = curses.newwin(5, half_win, 0, half_win)
-    def win_right(id_):
-        id_=id_
-        win2 = curses.newwin(5,0,0, half_win)
-        win2.clear()
-        m = Note.db['notes'][id_]
-        win2.addstr(m.content)
-        win2.refresh()
-        win2.getch()
+    def render_win_l(win, i = 0):
+        win.clear()
+        note = i
+        for note in Note.get_all():
+            if note == i:
+                hg = curses.A_REVERSE
+            else:
+                hg = curses.A_DIM
 
-    win_left(msg)
-    id_ = 2
-    if id_ != None:
-        win_right(id_)
+            win.addstr(str(Note.get(note)), hg)
+        win.refresh()
+        # win.getch()
 
-    # stdscr.clear()
-    # for m in msg:
-    #     stdscr.addstr(m)
-    #
-    # stdscr.refresh()
-    # stdscr.getch()
+    i = 0
+    while True:
+        render_win_l(win, i)
+        render_win_r(win2, i)
+        c = win.getch()
+        if c == ord('q'):
+            break
 
+        elif c == ord('j'):
+            i += 1
+
+        elif c == ord('k'):
+            i -= 1
 
 
 curses.wrapper(main)
