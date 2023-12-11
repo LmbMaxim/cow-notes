@@ -5,7 +5,7 @@ from datetime import datetime
 class Note:
     db = {'id_': -1, 'notes':{}}
 
-    def __init__(self, title, content, id_ = None, date_updated=None):
+    def __init__(self, title, content, id_ = None, date_updated=datetime.now()):
         self.id = id_
         self.title = title
         self.date_created = datetime.now()
@@ -81,6 +81,8 @@ class Note:
     #     return f'{self.date_created}\n{self.title}\n\n{self.content}\n'
     #
     def __repr__(self):
-        return f'{self.id}| {self.date_created} | {self.title:15} | {self.date_updated}\n'
+        date1 = self.date_created.strftime('%a %d %b %Y, %I:%M%p')
+        date2 = self.date_updated.strftime('%a %d %b %Y, %I:%M%p')
+        return f'{self.title:15} | {date2}\n'
 
 

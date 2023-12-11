@@ -44,29 +44,42 @@ def take_note():
 # Note.save('Project Idia', 'Make local dashboard with docker')
 # Note.save('Project Idia', 'Make game in webasm')
 
-# Note.save(title='1Title1', content=' text text text "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"')
-# Note.save(title='2Title2', content=' text text text "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"')
-# Note.save(title='3Title3', content=' text text text "ccccccccccccccccccccccccccccccccccccccccc"')
-# Note.save(title='4Title4', content=' text text text "ddddddddddddddddddddddddddddddddddddddddd"')
-# Note.save(title='5Title5', content=' text text text "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"')
-# Note.save(title='6Title6', content=' text text text "11111111111111111111111111111111111111111"')
-# Note.save(title='7Title7', content=' text text text "22222222222222222222222222222222222222222"')
-# Note.save(title='8Title8', content=' text text text "33333333333333333333333333333333333333333"')
-# Note.save(title='9Title9', content=' text text text "44444444444444444444444444444444444444444"')
+# Note.save(title='Title 1', content="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+# Note.save(title='Title 2', content="bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+# Note.save(title='Title 3', content="ccccccccccccccccccccccccccccccccccccccccc")
+# Note.save(title='Title 4', content="ddddddddddddddddddddddddddddddddddddddddd")
+# Note.save(title='Title 5', content="eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+# Note.save(title='Title 6', content="11111111111111111111111111111111111111111")
+# Note.save(title='Title 7', content="22222222222222222222222222222222222222222")
+# Note.save(title='Title 8', content="33333333333333333333333333333333333333333")
+# Note.save(title='Title 9', content="44444444444444444444444444444444444444444")
 # Note.update(title='Project Idia million bucks', content='Make game BBB', id_=0)
 # Note.update(title='Project Idia million bucks', content='Make game BBB', id_=1)
 # Note.update(title='Suckless Project', content='Make game ', id_=2)
+
+# 1                                                   -bag-
+# Going out of screen when navigeting through list of notes
+#
+# 2                    -fiature-
+# Implement ui for note criation
+#
+# 3                -refactor-
+# Remove commmand line parser
+#
+# 4                -fiature-
+# Add ablility to edit title
+
 
 def main(stdscr):
     half_win = curses.COLS//2
     hg = curses.A_REVERSE
 
-    win = curses.newwin(0, half_win -2, 0, 0)
-    win2 = curses.newwin(0, half_win, 0, half_win)
-    win_edit = curses.newwin(0, 0)
+    win = curses.newwin(0, (half_win - 1), 0, 1)
+    win2 = curses.newwin(0, half_win, 0, (half_win+1))
+    win_edit = curses.newwin(0, half_win, 0, (half_win+1))
 
     def render_edit_win():
-        box = Textbox(win_edit, insert_mode=True)
+        box = Textbox(win_edit, insert_mode=False)
         note = Note.get(i)
         msg = note.content
         title = note.title
@@ -103,6 +116,7 @@ def main(stdscr):
     
     i = 0
     while True:
+        win_edit.clear()
         render_win_l(win, i)
         render_win_r(win2, i)
         c = win.getch()
@@ -118,6 +132,6 @@ def main(stdscr):
         elif c == ord('e'):
             render_edit_win()
             
-
+print(Note.get(0).content)
 curses.wrapper(main)
 Note.write_db()
