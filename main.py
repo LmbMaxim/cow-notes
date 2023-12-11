@@ -1,5 +1,6 @@
 import argparse
 import curses
+from curses.textpad import Textbox
 from models import Note
 
 
@@ -62,6 +63,23 @@ def main(stdscr):
 
     win = curses.newwin(0, half_win -2, 0, 0)
     win2 = curses.newwin(0, half_win, 0, half_win)
+    win_edit = curses.newwin(0, 0)
+
+    def render_edit_win():
+        box = Textbox(win_edit, insert_mode=True)
+        note = Note.get(i)
+        msg = note.content
+        title = note.title
+        id_ = i
+
+        win_edit.clear()
+        win_edit.addstr(str(msg))
+
+        box.edit()
+        content = box.gather()
+
+        return Note.update(title=title, content=content, id_=id_)
+        
 
     def render_win_r(win, i = 0):
         msg = Note.get(i).content
@@ -82,7 +100,7 @@ def main(stdscr):
             win.addstr(str(Note.get(note)), hg)
         win.refresh()
         # win.getch()
-
+    
     i = 0
     while True:
         render_win_l(win, i)
@@ -97,6 +115,9 @@ def main(stdscr):
         elif c == ord('k'):
             i -= 1
 
+        elif c == ord('e'):
+            render_edit_win()
+            
 
 curses.wrapper(main)
 Note.write_db()
